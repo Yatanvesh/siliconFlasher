@@ -127,6 +127,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+     dexOptions {
+              javaMaxHeapSize "6g"
+        }
 
     defaultConfig {
         applicationId "com.siliconalchemist.flash"
