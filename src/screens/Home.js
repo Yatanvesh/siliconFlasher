@@ -54,7 +54,7 @@ class Home extends React.Component {
 
   async componentDidMount(): * {
     let token = await messaging().getToken();
-    console.log('fcm', token.slice(0,10));
+    console.log('fcm', token.slice(0, 10));
     const user = await readFromStorage(storageKeys.USER);
     const posts = await getPosts();
     console.log("saved posts", posts);
@@ -78,6 +78,7 @@ class Home extends React.Component {
     });
     this.updatePostsFromAPI();
   }
+
   addPost = (post) => {
     const posts = [...this.state.posts];
     posts.unshift(post);
@@ -127,7 +128,8 @@ class Home extends React.Component {
     this.setState({modalVisible: true, viewerIndex: index})
   }
   renderPost = (post, index) => {
-    if (post)
+    if (post) {
+      const date = new Date(post.createdOn);
       return (
         <TouchableOpacity onPress={() => this.showViewer(index)} key={post._id}>
           <Image
@@ -159,6 +161,16 @@ class Home extends React.Component {
               fontWeight: 'bold',
               fontSize: 18
             }}>By {post.createdBy}</Text>
+            <Text style={{
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: 14
+            }}>{date.toLocaleDateString()}</Text>
+            <Text style={{
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: 14
+            }}>{date.getHours()}:{date.getMinutes()}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <CoreImage style={{width: 16, height: 16, marginRight: 5}} tintColor={'white'} source={Eye}/>
               <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{post.views}</Text>
@@ -171,6 +183,7 @@ class Home extends React.Component {
           </View>
         </TouchableOpacity>
       )
+    }
     return null;
   }
   renderPosts = () => {
