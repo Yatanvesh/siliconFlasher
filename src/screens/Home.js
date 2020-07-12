@@ -57,7 +57,7 @@ class Home extends React.Component {
     console.log('fcm', token.slice(0,10));
     const user = await readFromStorage(storageKeys.USER);
     const posts = await getPosts();
-    console.log("saved posts", posts.length);
+    console.log("saved posts", posts);
     if (posts) this.setState({posts});
     if (!user) {
       let {user} = await createUser(token);
@@ -78,7 +78,6 @@ class Home extends React.Component {
     });
     this.updatePostsFromAPI();
   }
-
   addPost = (post) => {
     const posts = [...this.state.posts];
     posts.unshift(post);
