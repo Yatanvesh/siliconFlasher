@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "480689925264",
+    "firebase_url": "https://siliconflash-55637.firebaseio.com",
+    "project_id": "siliconflash-55637",
+    "storage_bucket": "siliconflash-55637.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480689925264:android:cad52b372062c70af7fc15",
+        "android_client_info": {
+          "package_name": "com.siliconalchemist.flash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480689925264-30ia5pojnqiorqunv4iq1qbid57oqno4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.siliconalchemist.flash",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "480689925264-b11qesu4u0c486b00hfqd1v1nll2emj4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-vg3YKU61rrqoPYlXbE4KibMXoRjcgfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480689925264-b11qesu4u0c486b00hfqd1v1nll2emj4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
