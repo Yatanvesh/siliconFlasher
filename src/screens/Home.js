@@ -57,7 +57,7 @@ class Home extends React.Component {
     console.log('fcm', token.slice(0, 10));
     const user = await readFromStorage(storageKeys.USER);
     const posts = await getPosts();
-    console.log("saved posts", posts);
+    // console.log("saved posts", posts);
     if (posts) this.setState({posts});
     if (!user) {
       let {user} = await createUser(token);
@@ -107,7 +107,7 @@ class Home extends React.Component {
         this.setState({
           imageUri: response.uri,
         });
-        let result = await uploadImage(response.path, this.state.user.userName);
+        let result = await uploadImage(response.uri, this.state.user.userName);
         finishLoadingCallback();
       }
     });

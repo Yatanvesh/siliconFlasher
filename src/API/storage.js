@@ -13,7 +13,7 @@ export const uploadImage = async (path, userName='default') => {
       {
         name: "mediaContent",
         filename: path,
-        type: "image/" + fileExtension,
+        type: "image/jpg", //+ fileExtension,
         data: RNFetchBlob.wrap(compressedPath),
       },
     ];
@@ -52,7 +52,7 @@ export const compressImage = async (uri) => {
       uri,
       1000,
       2000,
-      extension.toUpperCase(),
+      'JPEG',//extension.toUpperCase(),
       80,
       0,
     );
