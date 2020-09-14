@@ -1,10 +1,11 @@
 import RNFetchBlob from "rn-fetch-blob";
 import ImageResizer from "react-native-image-resizer";
 import {rootURL} from "../constants";
+import {PermissionsAndroid} from "react-native";
 
 const getFileExtension = (path) => path.slice(((path.lastIndexOf(".") - 1) >>> 0) + 2);
 
-export const uploadImage = async (path, userName='default') => {
+export const uploadImage = async (path, userName = 'default') => {
   try {
     let fileExtension = getFileExtension(path);
     console.log("Uploading from ", path);
@@ -18,8 +19,8 @@ export const uploadImage = async (path, userName='default') => {
       },
     ];
     uploadData.push({
-      name:'userName',
-      data:userName
+      name: 'userName',
+      data: userName
     });
     let response = await RNFetchBlob.fetch(
       "PUT",
@@ -64,3 +65,29 @@ export const compressImage = async (uri) => {
     return false;
   }
 };
+
+const getExtention = (filename) => {
+  return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) :
+    undefined;
+}
+
+export const downloadImage = (imageUrl, imageName) => {
+  var date = new Date();
+  var ext = getExtention(imageUrl);
+  ext = "." + ext[0];
+  const {config, fs} = RNFetchBlob;
+  let PictureDir = fs.dirs.PictureDir
+  let options = {
+    fileCache: true,
+    addAndroidDownloads: {
+      useDownloadManager: true,
+      notification: true,
+      path: PictureDir + "/flasher_" + imageName + ext,
+      description: 'Image'
+    }
+  }
+  config(options).fetch('GET', imageUrl).then((res) => {
+    console.log("image saved");
+  });
+}
+

@@ -24,6 +24,7 @@ import ImagePicker from 'react-native-image-picker';
 import Swiper from 'react-native-swiper'
 import {Modal} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import FlashMessage, {showMessage} from "react-native-flash-message";
 
 LogBox.ignoreLogs(["Animated"]);
 import AwesomeButton from 'react-native-really-awesome-button/src/themes/rick';
@@ -33,12 +34,13 @@ import Image from 'react-native-image-progress';
 import Progress from 'react-native-progress/Pie';
 import messaging from '@react-native-firebase/messaging';
 import {flashMessageHandler, LocalMessageNotification} from "../notification";
-import {uploadImage} from "../API/storage";
+import {downloadImage, uploadImage} from "../API/storage";
 import {storageKeys} from "../constants";
-import {readFromStorage, saveToStorage} from "../utils";
+import {readFromStorage, requestStoragePermissions, saveToStorage} from "../utils";
 import {createUser, listPosts, submitView} from "../API/API";
 import {getPosts, savePost} from "../utils/post";
 import Eye from '../../assets/visibility.png';
+import Download from '../../assets/download.png';
 
 messaging().setBackgroundMessageHandler(flashMessageHandler);
 
@@ -176,10 +178,15 @@ class Home extends React.Component {
               <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{post.views}</Text>
             </View>
           </View>
-          <View style={{position: 'absolute', right: 10, top: 10}}>
+          <View style={{position: 'absolute', right: 10, top: 10, alignItems: 'flex-end'}}>
             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>
               {1 + index}/{this.state.posts.length}
             </Text>
+            <TouchableOpacity onPress={() => this.downloadImage(post.contentURL, post.postName)}>
+              <CoreImage style={{
+                width: 20, height: 20,
+              }} tintColor={'white'} source={Download}/>
+            </TouchableOpacity>
           </View>
         </TouchableOpacity>
       )
@@ -235,6 +242,15 @@ class Home extends React.Component {
       </Modal>
     )
   }
+  downloadImage = async (url, name) => {
+    const res = await requestStoragePermissions();
+    if (!res) return;
+    showMessage({
+      message: 'Downloading ' + name,
+      type: "info",
+    });
+    downloadImage(url, name);
+  }
 
   render() {
     return (
@@ -255,6 +271,7 @@ class Home extends React.Component {
             {this.imageViewer()}
             {this.renderBroadcastButton()}
           </AnimatedBackgroundColorView>
+          <FlashMessage position="top" floating={true}/>
         </SafeAreaView>
       </>
     );

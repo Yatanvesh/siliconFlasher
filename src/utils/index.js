@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import {PermissionsAndroid} from "react-native";
 
 export const saveToStorage = async (key, value) => {
   try {
@@ -26,6 +27,22 @@ export const deleteFromStorage = async (key) => {
     await AsyncStorage.removeItem(key);
     return true;
   } catch (exception) {
+    return false;
+  }
+}
+
+export async function requestStoragePermissions() {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      {
+        'title': 'Storage Permission',
+        'message': 'Flasher needs access to your storage to download Photos.'
+      }
+    )
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  } catch (err) {
+    console.warn(err)
     return false;
   }
 }
